@@ -1,0 +1,102 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+ryu-env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Testing
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Trained Models
+models/
+*.zip
+
+# Training Logs & TensorBoard
+logs/
+tensorboard_logs/
+runs/
+
+# Data files
+data/**/*.csv
+data/**/*.pkl
+data/**/*.json
+*.log
+
+# Mininet / Network Simulation
+mininet/**/*.log
+mininet/**/*.pcap
+*.cap
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+.directory
+
+# IDE-specific
+.vscode/settings.json
+.vscode/launch.json
+.env
+.env.local
+
+# Project specific
+*.pyc
+*.pyo
+test_*.py
+quick_*.py
