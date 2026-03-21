@@ -7,7 +7,6 @@ import os
 import sys
 import logging
 from pathlib import Path
-import numpy as np
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import EvalCallback

@@ -4,7 +4,7 @@ Creates various network topologies (tree, linear, etc.)
 """
 
 from mininet.net import Mininet
-from mininet.node import Controller, RemoteController, OVSSwitch
+from mininet.node import RemoteController, OVSSwitch
 from mininet.link import TCLink
 from mininet.topo import Topo
 from mininet.cli import CLI
@@ -134,9 +134,15 @@ def create_network(
     
     # Create topology
     if topo_type == 'tree':
-        topo = TreeTopology(depth=2, fanout=2)
+        # Depth is fixed to 2, so approximate requested hosts via fanout^2.
+        fanout = max(1, int(num_hosts ** 0.5))
+        if fanout * fanout < num_hosts:
+            fanout += 1
+        topo = TreeTopology(depth=2, fanout=fanout)
     elif topo_type == 'linear':
-        topo = LinearTopology(num_switches=3)
+        # Linear topology has two end hosts; scale chain length from num_hosts.
+        num_switches = max(1, num_hosts - 1)
+        topo = LinearTopology(num_switches=num_switches)
     else:
         raise ValueError(f"Unknown topology type: {topo_type}")
     

@@ -7,8 +7,7 @@ from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
 from ryu.ofproto import ofproto_v1_0
-from ryu.lib.mac import haddr_to_bin
-from ryu.lib.packet import packet, ethernet, ipv4, icmp, arp, tcp
+from ryu.lib.packet import packet, ethernet, arp
 import logging
 
 logger = logging.getLogger(__name__)

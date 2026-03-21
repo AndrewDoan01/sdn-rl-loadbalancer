@@ -5,14 +5,12 @@ Integrates RL agent decisions with OpenFlow switches
 
 from ryu.base import app_manager
 from ryu.controller import ofp_event
-from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, DEAD_DISPATCHER, set_ev_cls
 from ryu.ofproto import ofproto_v1_3
-from ryu.lib.packet import packet, ethernet, ipv4, arp
-from ryu.lib import dpctl
+from ryu.lib.packet import packet, ethernet, arp
 import logging
-import json
 from collections import defaultdict
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 
 logger = logging.getLogger(__name__)
 
@@ -81,19 +79,19 @@ class RLControllerApp(app_manager.RyuApp):
         
         logger.info(f"Installed table-miss flow on switch {dpid}")
     
-    @set_ev_cls(ofp_event.EventOFPStateChange, MAIN_DISPATCHER)
+    @set_ev_cls(ofp_event.EventOFPStateChange, [MAIN_DISPATCHER, DEAD_DISPATCHER])
     def state_change_handler(self, ev):
         """Handle switch state changes."""
         datapath = ev.datapath
         
-        if ev.state == ofp_event.MAIN_DISPATCHER:
+        if ev.state == MAIN_DISPATCHER:
             if datapath.id not in self.datapaths:
                 logger.info(f"Switch {datapath.id} entered MAIN_DISPATCHER")
                 self.datapaths[datapath.id] = datapath
                 # Request port descriptions
                 self.request_port_desc(datapath)
         
-        elif ev.state == ofp_event.DEAD_DISPATCHER:
+        elif ev.state == DEAD_DISPATCHER:
             if datapath.id in self.datapaths:
                 logger.info(f"Switch {datapath.id} disconnected")
                 del self.datapaths[datapath.id]
@@ -108,8 +106,6 @@ class RLControllerApp(app_manager.RyuApp):
         """
         msg = ev.msg
         datapath = msg.datapath
-        ofproto = datapath.ofproto
-        parser = datapath.ofproto_parser
         in_port = msg.in_port
         
         pkt = packet.Packet(msg.data)
@@ -251,7 +247,6 @@ class RLControllerApp(app_manager.RyuApp):
             return False
         
         datapath = self.datapaths[dpid]
-        ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
         
         try:

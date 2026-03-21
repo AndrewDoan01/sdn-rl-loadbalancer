@@ -6,7 +6,7 @@ Monitor CPU, memory, and other resource usage
 import psutil
 import logging
 import time
-from typing import Dict, List, Optional
+from typing import Dict, List
 from collections import defaultdict
 
 logger = logging.getLogger(__name__)

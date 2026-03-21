@@ -34,7 +34,7 @@ def start_mininet_network(
     topo_type: str = "tree",
     controller_ip: str = "127.0.0.1",
     controller_port: int = 6633
-) -> Optional:
+) -> Optional[object]:
     """
     Start Mininet network.
     
@@ -68,7 +68,7 @@ def start_mininet_network(
 
 
 def generate_traffic(
-    net: Optional,
+    net: Optional[object],
     scenario: str = "basic",
     duration: int = 60
 ) -> None:

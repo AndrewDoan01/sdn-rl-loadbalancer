@@ -5,12 +5,10 @@ Provides REST endpoints to:
 - Apply routing decisions from RL agent
 """
 
-from ryu.app.wsgi import WSGIApplication
 from ryu.controller import ofp_event
-from ryu.controller.handler import set_ev_cls, MAIN_DISPATCHER
+from ryu.controller.handler import set_ev_cls, MAIN_DISPATCHER, DEAD_DISPATCHER
 from ryu.base import app_manager
 from ryu.ofproto import ofproto_v1_3
-from ryu.lib import dpctl
 
 import json
 import logging
@@ -45,15 +43,15 @@ class MonitorAPI(app_manager.RyuApp):
         wsgi = kwargs['wsgi']
         wsgi.register_instance(self)
     
-    @set_ev_cls(ofp_event.EventOFPStateChange, MAIN_DISPATCHER)
+    @set_ev_cls(ofp_event.EventOFPStateChange, [MAIN_DISPATCHER, DEAD_DISPATCHER])
     def state_change_handler(self, ev):
         """Track switch state changes."""
         datapath = ev.datapath
-        if ev.state == ofp_event.MAIN_DISPATCHER:
+        if ev.state == MAIN_DISPATCHER:
             if datapath.id not in self.datapaths:
                 logger.info(f"Register datapath {datapath.id}")
                 self.datapaths[datapath.id] = datapath
-        elif ev.state == ofp_event.DEAD_DISPATCHER:
+        elif ev.state == DEAD_DISPATCHER:
             if datapath.id in self.datapaths:
                 logger.info(f"Unregister datapath {datapath.id}")
                 del self.datapaths[datapath.id]

@@ -3,10 +3,9 @@ Traffic Generator for Mininet
 Generates realistic network traffic using iperf and scapy
 """
 
-import subprocess
 import time
 import logging
-from typing import List, Tuple
+from typing import Tuple
 from mininet.net import Mininet
 
 logger = logging.getLogger(__name__)

@@ -4,7 +4,6 @@ Provides Python functions to call Ryu monitoring endpoints
 """
 
 import requests
-import json
 import logging
 from typing import Dict, Any, Optional
 from urllib.parse import urljoin

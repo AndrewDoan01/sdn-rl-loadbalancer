@@ -12,7 +12,7 @@ Reward: -CPU_variance - latency_penalty + latency_improvement - migration_cost
 import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
-from typing import Tuple, Dict, Any, List, Optional
+from typing import Tuple, Dict, Any, Optional
 import requests
 import logging
 import time

@@ -7,7 +7,7 @@ import logging
 import numpy as np
 import sys
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.vec_env import DummyVecEnv
